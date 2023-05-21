@@ -17,11 +17,11 @@ module.exports = {
   },
   getChatGPTResponse: async (transcript) => {
     try {
-      const completion = await openai.createCompletion({
-        model: 'text-davinci-003',
-        prompt: transcript
+      const completion = await openai.createChatCompletion({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: transcript }]
       })
-      return { success: true, data: completion.data.choices[0].text }
+      return { success: true, data: completion.data.choices[0].message.content }
     } catch (error) {
       return { success: false, message: error.message }
     }

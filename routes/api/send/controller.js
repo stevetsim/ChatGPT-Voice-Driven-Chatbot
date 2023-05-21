@@ -7,17 +7,23 @@ const { getTranscript, getChatGPTResponse } = require('./service')
 
 module.exports = {
   sendMessage: async (req, res) => {
+    if (!req.file) return res.json(responser.generate(req.originalUrl, req.method, false, 'Missing Audio File', {}))
+    const { path } = req.file
+
     try {
-      if (!req.file) throw Error('Missing Audio File')
-      const { path, mimetype } = req.file
-      console.log(req.file)
       const trans_result = await getTranscript(fs.createReadStream(path))
       if (trans_result.success) {
         const transcript = trans_result.data
-      }
-      fs.unlinkSync(path)
+        console.log(`[API] Get Transcript Success - ${transcript}`)
+        const response = await getChatGPTResponse(transcript)
+        if (response.success) {
+          res.json(responser.generate(req.originalUrl, req.method, true, 'Create Call Success', { result: response.data }))
+        } else throw Error(response.message)
+      } else throw Error(trans_result.message)
     } catch (error) {
-      return res.json(responser.generate(req.originalUrl, req.method, false, error.message, {}))
+      res.json(responser.generate(req.originalUrl, req.method, false, error.message, {}))
+    } finally {
+      fs.unlinkSync(path)
     }
   }
 }
