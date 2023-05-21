@@ -1,4 +1,4 @@
-# ChatGPT-Voice-Driven-Chatbot
+# ChatGPT Voice Driven Chatbot
 ![Node.js](https://img.shields.io/badge/Node.js-v14.16.1-green) ![Express](https://img.shields.io/badge/Express-v4.17.1-blue) ![Whisper](https://img.shields.io/badge/Whisper-API-orange) ![ChatGPT](https://img.shields.io/badge/ChatGPT-API-yellow)
 
 ---
