@@ -17,7 +17,7 @@ module.exports = {
         console.log(`[API] Get Transcript Success - ${transcript}`)
         const response = await getChatGPTResponse(transcript)
         if (response.success) {
-          res.json(responser.generate(req.originalUrl, req.method, true, 'Create Call Success', { result: response.data }))
+          res.json(responser.generate(req.originalUrl, req.method, true, 'Get ChatGPT Response Success', { result: response.data }))
         } else throw Error(response.message)
       } else throw Error(trans_result.message)
     } catch (error) {
